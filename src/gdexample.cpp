@@ -1,4 +1,5 @@
 #include "gdexample.h"
+#include "constants.h"
 #include <godot_cpp/core/class_db.hpp>
 
 using namespace godot;
@@ -36,6 +37,8 @@ void GDExample::_process(double delta) {
 
     time_emit += delta;
     if (time_emit > 1.0) {
+        UtilityFunctions::print(ARRAY_TEST[2]);
+        UtilityFunctions::print(std::get<1>(TUPLE_TEST));
         emit_signal("position_changed", this, new_position);
         time_emit = 0.0;
     }

@@ -1,6 +1,8 @@
 {
     "files.associations": {
         "vector": "cpp",
-        "cmath": "cpp"
+        "cmath": "cpp",
+        "__tuple": "cpp",
+        "tuple": "cpp"
     }
 }
