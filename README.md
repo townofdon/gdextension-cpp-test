@@ -4,6 +4,11 @@ This follows the following tutorial:
 
 https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html
 
+Other notable tutorials:
+
+- https://docs.godotengine.org/en/3.5/development/cpp/custom_modules_in_cpp.html
+- https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/gdextension_c_example.html#introduction
+
 ## Project Structure
 
 ```
@@ -24,8 +29,8 @@ scons platform=macos
 ## Next steps
 
 - [x] - [Adding Properties](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#adding-properties)
-- [ ] - [Signals](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#signals)
-
+- [x] - [Signals](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#signals)
+- [ ] - clone `godot-cpp-template` into cavegen and get crackin'
 
 ## Steps Taken, Hangups, and Pitfalls
 
