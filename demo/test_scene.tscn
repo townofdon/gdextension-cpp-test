@@ -1,11 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://dsjk5rlko0787"]
+[gd_scene load_steps=3 format=3 uid="uid://dsjk5rlko0787"]
 
 [ext_resource type="Texture2D" uid="uid://c462fdg5wnah0" path="res://icon.svg" id="1_uhqqe"]
+[ext_resource type="Script" uid="uid://bcjiid4ou6xt5" path="res://gd_example.gd" id="2_ia1lp"]
 
 [node name="TestScene" type="Node2D"]
 
 [node name="GDExample" type="GDExample" parent="."]
 amplitude = 50.0
-speed = 1.72
+speed = 20.0
 texture = ExtResource("1_uhqqe")
 centered = false
+script = ExtResource("2_ia1lp")
+
+[connection signal="position_changed" from="GDExample" to="GDExample" method="_on_position_changed"]
