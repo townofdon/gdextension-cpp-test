@@ -13,9 +13,18 @@ https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_e
 └── src         - extension source code
 ```
 
+## Compiling
+
+See: https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#compiling-the-plugin
+
+```
+scons platform=macos
+```
+
 ## Next steps
 
-[Adding Properties](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#adding-properties)
+- [x] - [Adding Properties](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#adding-properties)
+- [ ] - [Signals](https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html#signals)
 
 
 ## Steps Taken, Hangups, and Pitfalls
@@ -37,3 +46,14 @@ I tried running `godot --dump-extension-api` against godot-mono, but it failed, 
 
 In `gdexample.cpp`, I don't understand how `sin` and `cos` are getting called without including `<cmath>` or `"math.h"`.
 
+**ClassDB::bind_method**
+
+AI told me:
+
+> ClassDB::bind_method in Godot is a static function used in C++ GDExtensions to expose methods of your custom C++ classes to the Godot engine, making them callable from GDScript and accessible within the editor.
+
+So, it seems that C++ classes can be used directly in GDScript!! Hell yea.
+
+Confirmed - this custom modules tutorial explicitly shows adding C++ methods being used in GDScript:
+
+- https://docs.godotengine.org/en/3.5/development/cpp/custom_modules_in_cpp.html
