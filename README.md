@@ -57,3 +57,34 @@ So, it seems that C++ classes can be used directly in GDScript!! Hell yea.
 Confirmed - this custom modules tutorial explicitly shows adding C++ methods being used in GDScript:
 
 - https://docs.godotengine.org/en/3.5/development/cpp/custom_modules_in_cpp.html
+
+
+**Arrays in C++**
+
+Arrays in C++ are very similar to C# arrays. One of the main caveats I ran into was getting the array length. `sizeof(arr)` did not produce the array length as I expected. Instead, you need to use the following to get the array length:
+
+```
+sizeof(ARRAY_TEST) / sizeof(ARRAY_TEST[0])
+```
+
+This is because iterating over an array is just changing the offest from the beginning pointer. [sizeof(var)](https://www.geeksforgeeks.org/cpp/cpp-sizeof-operator/) returns the number of bytes that that variable contains. Since an `int` has 32 bits (4 bytes), then `sizeof(arr)` for an array of ints produces a number 4X larger than expected!
+
+Getting the size of an array of tuples proves to be quite the challenge, and is one more reason to prefer the more simple 1-dimensional array approach.
+
+
+**Tuples in C++**
+
+Declaring a tuple in C++ is straightforward, albeit a little clunky. I wanted to see if it was possible to define a constant array of tuples in C++. Turns out this is possible (well, everything is "possible" in code). However, I will probably just stick to a single-dimensional array and index by groups of elements. E.g., if our TRIANGULATIONS array always has groups of 15 items each, then it is simple to iterate over the elements of each group index like so:
+
+```c++
+int group_index = 5;
+for (size_t i = 0; i < 15; i++) {
+    int triangulation = TRIANGULATIONS[group_index * 15 + i];
+    if (triangulation < 0) break;
+}
+```
+
+
+**Templates**
+
+C++ templates are like generics in other languages. I found a lot of template stuff when googling how to iterate over C++ tuples.

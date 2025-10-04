@@ -8,4 +8,12 @@ namespace godot {
 
     inline constexpr const std::tuple<int, int> TUPLE_TEST = {5, 6};
 
+    inline constexpr const std::tuple<int, int> ARRAY_TUPLE_TEST[5] = {
+        {1, 2},
+        {3, 4},
+        {5, 6},
+        {7, 8},
+        {9, 10},
+    };
+
 }

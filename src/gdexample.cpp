@@ -27,6 +27,20 @@ GDExample::~GDExample() {
     // Add your cleanup here.
 }
 
+// use template, function pointer, and compile-time recursion to iterate over a tuple
+template<size_t I = 0, typename... Tp>
+void iterate_tuple(std::tuple<Tp...> t, void (*Func) (int val)) {
+    // std::cout << std::get<I>(t) << " ";
+    Func(std::get<I>(t));
+    if constexpr(I+1 != sizeof...(Tp)) {
+        iterate_tuple<I+1>(t, Func);
+    }
+}
+
+void print_int(int val) {
+    UtilityFunctions::print(val);
+}
+
 void GDExample::_process(double delta) {
     time_passed += speed * delta;
 
@@ -37,8 +51,18 @@ void GDExample::_process(double delta) {
 
     time_emit += delta;
     if (time_emit > 1.0) {
-        UtilityFunctions::print(ARRAY_TEST[2]);
-        UtilityFunctions::print(std::get<1>(TUPLE_TEST));
+        for (size_t i = 0; i < sizeof(ARRAY_TEST) / sizeof(ARRAY_TEST[0]); i++)
+        {
+            UtilityFunctions::print(ARRAY_TEST[i]);
+        }
+
+        iterate_tuple(TUPLE_TEST, print_int);
+
+        for (size_t i = 0; i < 5; i++)
+        {
+            iterate_tuple(ARRAY_TUPLE_TEST[i], print_int);
+        }
+
         emit_signal("position_changed", this, new_position);
         time_emit = 0.0;
     }
