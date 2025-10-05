@@ -1,5 +1,23 @@
 # gdextension-cpp-example
 
+What I'm trying to accomplish here:
+
+I implemented a marching cubes algorithm using only GDScript, but that was far too slow. Turns out that GDScript function calls add an insane amount of overhead. I switched over to C#, a language I feel very comfortable in. However, godot-mono cannot publish builds for the web. For why this is, see [this godotengine blog post](https://godotengine.org/article/platform-state-in-csharp-for-godot-4-2/#web).
+
+My mesh generator is very modular and isolated. The dependency graph is super simple:
+
+```
+CaveGen -> Config
+CaveGen -> MeshGen
+MeshGen -> [Config, Noise] (via dependency injection)
+```
+
+`CaveGen` above is GDScript, and is responsible for calling `MeshGen.generate` whenever it detects a change any of the config or noise parameters.
+
+Which got me thinking: `Config` and `MeshGen` could be written as c++ modules, which would provide the perf boost I need as well as support being publishable to the interwebs. And thus begins the deep-dive down the rabbit trail of [GDExtension](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/index.html).
+
+---
+
 This follows the following tutorial:
 
 https://docs.godotengine.org/en/stable/tutorials/scripting/cpp/gdextension_cpp_example.html
@@ -13,7 +31,7 @@ Other notable tutorials:
 
 ```
 .
-├── demo        - Godot project
+├── demo        - Demo Godot project
 ├── godot-cpp   - C++ bindings
 └── src         - extension source code
 ```
