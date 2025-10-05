@@ -1,0 +1,5 @@
+[gd_resource type="OtherClass" format=3 uid="uid://bx1p2ssyip52t"]
+
+[resource]
+word = "bobby"
+val = 2

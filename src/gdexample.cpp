@@ -1,6 +1,7 @@
 #include "gdexample.h"
 #include "constants.h"
 #include <godot_cpp/core/class_db.hpp>
+#include <godot_cpp/variant/string.hpp>
 
 using namespace godot;
 
@@ -14,6 +15,8 @@ void GDExample::_bind_methods() {
     ADD_PROPERTY(PropertyInfo(Variant::FLOAT, "speed", PROPERTY_HINT_RANGE, "0,20,0.01"), "set_speed", "get_speed");
 
     ADD_SIGNAL(MethodInfo("position_changed", PropertyInfo(Variant::OBJECT, "node"), PropertyInfo(Variant::VECTOR2, "new_pos")));
+
+    ClassDB::bind_method(D_METHOD("test", "other"), &GDExample::test);
 }
 
 GDExample::GDExample() {
@@ -38,7 +41,8 @@ void iterate_tuple(std::tuple<Tp...> t, void (*Func) (int val)) {
 }
 
 void print_int(int val) {
-    UtilityFunctions::print(val);
+    // // print to Godot console
+    // UtilityFunctions::print(val);
 }
 
 void GDExample::_process(double delta) {
@@ -53,7 +57,7 @@ void GDExample::_process(double delta) {
     if (time_emit > 1.0) {
         for (size_t i = 0; i < sizeof(ARRAY_TEST) / sizeof(ARRAY_TEST[0]); i++)
         {
-            UtilityFunctions::print(ARRAY_TEST[i]);
+            // UtilityFunctions::print(ARRAY_TEST[i]);
         }
 
         iterate_tuple(TUPLE_TEST, print_int);
@@ -84,4 +88,11 @@ void GDExample::set_speed(const double p_speed) {
 
 double GDExample::get_speed() const {
     return speed;
+}
+
+void GDExample::test(OtherClass *other)
+{
+    // print to Godot console
+    auto val = String(std::to_string(other->get_val()).c_str());
+    UtilityFunctions::print("hello " + other->get_word() + " " + val + " times!");
 }

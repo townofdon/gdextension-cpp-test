@@ -1,5 +1,6 @@
 #include "register_types.h"
 
+#include "other_class.h"
 #include "gdexample.h"
 
 #include <gdextension_interface.h>
@@ -13,6 +14,7 @@ void initialize_example_module(ModuleInitializationLevel p_level) {
         return;
     }
 
+    GDREGISTER_RUNTIME_CLASS(OtherClass);
     GDREGISTER_RUNTIME_CLASS(GDExample);
 }
 

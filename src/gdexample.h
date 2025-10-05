@@ -1,5 +1,6 @@
 #pragma once
 
+#include "other_class.h"
 #include <godot_cpp/classes/sprite2d.hpp>
 
 namespace godot {
@@ -26,6 +27,8 @@ public:
     double get_amplitude() const;
     void set_speed(const double p_speed);
     double get_speed() const;
+
+    void test(OtherClass* other);
 };
 
 } // namespace godot
