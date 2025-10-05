@@ -12,7 +12,7 @@ CaveGen -> MeshGen
 MeshGen -> [Config, Noise] (via dependency injection)
 ```
 
-`CaveGen` above is GDScript, and is responsible for calling `MeshGen.generate` whenever it detects a change any of the config or noise parameters.
+`CaveGen` above is GDScript, and is responsible for calling `MeshGen.generate` whenever it detects a change in any of the config or noise parameters.
 
 Which got me thinking: `Config` and `MeshGen` could be written as c++ modules, which would provide the perf boost I need as well as support being publishable to the interwebs. And thus begins the deep-dive down the rabbit trail of [GDExtension](https://docs.godotengine.org/en/stable/tutorials/scripting/gdextension/index.html).
 
@@ -94,7 +94,7 @@ Arrays in C++ are very similar to C# arrays. One of the main caveats I ran into 
 sizeof(ARRAY_TEST) / sizeof(ARRAY_TEST[0])
 ```
 
-This is because iterating over an array is just changing the offest from the beginning pointer. [sizeof(var)](https://www.geeksforgeeks.org/cpp/cpp-sizeof-operator/) returns the number of bytes that that variable contains. Since an `int` has 32 bits (4 bytes), then `sizeof(arr)` for an array of ints produces a number 4X larger than expected!
+This is because iterating over an array is just changing the offset from the beginning pointer. [sizeof(var)](https://www.geeksforgeeks.org/cpp/cpp-sizeof-operator/) returns the number of bytes that that variable contains. Since an `int` has 32 bits (4 bytes), then `sizeof(arr)` for an array of ints produces a number 4X larger than expected!
 
 Getting the size of an array of tuples proves to be quite the challenge, and is one more reason to prefer the more simple 1-dimensional array approach.
 
