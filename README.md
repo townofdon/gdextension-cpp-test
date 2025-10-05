@@ -63,11 +63,15 @@ scons platform=macos
 
 **Building Godot C++ Bindings**
 
-The Godot executable can also be used as a command line binary. I aliased `godot` to the `Godot` binary path (NOT application; macos applications are just directories).
+The Godot executable can also be used as a command line binary. I aliased `godot` to the `Godot` binary path (NOT application; macos applications are just directories). I followed [this Godot Command line tutorial](https://docs.godotengine.org/en/latest/tutorials/editor/command_line_tutorial.html).
 
-I tried running `godot --dump-extension-api` against godot-mono, but it failed, complaining about not being able to find the .NET v8 runtime or something. Since the whole reason I'm researching godot-cpp is to be able to write efficient mesh generation code and deploy it to the web (since the opensource webassembly compiler that Godot uses does not support C#), I just used the plain `godot` binary instead. It worked just fine.
+```bash
+alias godot="/Applications/Godot.app/Contents/MacOS/Godot"
+```
 
-In `gdexample.cpp`, I don't understand how `sin` and `cos` are getting called without including `<cmath>` or `"math.h"`.
+I tried running `godot --dump-extension-api` against `godot-mono`, but it failed, complaining about not being able to find the .NET v8 runtime or something. Since the whole reason I'm researching godot-cpp is to be able to write efficient mesh generation code and deploy it to the web, I just used the plain `godot` binary instead. It worked just fine.
+
+In `gdexample.cpp`, I don't understand how `sin` and `cos` are getting called without including `<cmath>` or `"math.h"`. I suspect that these headers are getting included somewhere in downstream dependencies.
 
 **ClassDB::bind_method**
 
@@ -111,3 +115,22 @@ for (size_t i = 0; i < 15; i++) {
 **Templates**
 
 C++ templates are like generics in other languages. I found a lot of template stuff when googling how to iterate over C++ tuples.
+
+
+**Binding arbitrary class methods**
+
+This was the final boss of this exercise, since the tutorials do not explicitly show how to accomplish this. Since I need to ultimately call `MeshGen.generate` with args (`Noise` and `Config`), the latter of which will be a C++ class, I needed a way to invoke an arbitrary C++ class method from GDScript. I assumed `ClassDB::bind_method` would give me everything I needed for this. And this was very close. Turns out, all you need to do to bind a method from one class to another class is to pass a pointer of the `OtherClass` in your method args.
+
+```c++
+void GDExample::_bind_methods() {
+    ClassDB::bind_method(D_METHOD("test", "other"), &GDExample::test);
+}
+
+void GDExample::test(OtherClass *other)
+{
+    // print to Godot console
+    UtilityFunctions::print("hello " + other->get_word());
+}
+```
+
+With this proof-of-concept finished, it is now time to get CaveGen working with GDExtension!! 🚀
