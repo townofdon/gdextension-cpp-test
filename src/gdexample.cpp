@@ -92,7 +92,8 @@ double GDExample::get_speed() const {
 
 void GDExample::test(OtherClass *other)
 {
+    // convert int to a Godot string
+    auto val = godot::String(std::to_string(other->get_val()).c_str());
     // print to Godot console
-    auto val = String(std::to_string(other->get_val()).c_str());
     UtilityFunctions::print("hello " + other->get_word() + " " + val + " times!");
 }
